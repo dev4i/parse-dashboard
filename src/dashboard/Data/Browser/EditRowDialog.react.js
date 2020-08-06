@@ -284,6 +284,7 @@ export default class EditRowDialog extends React.Component {
               <ObjectPickerDialog
                 schema={schema}
                 column={column}
+                maxRows={this.props.maxRows}
                 className={targetClass}
                 pointerId={pointerId}
                 onConfirm={newValue =>
@@ -353,8 +354,9 @@ export default class EditRowDialog extends React.Component {
         default:
           inputComponent = <div />;
       }
-
+      
       return (
+        
         <Field
           key={name}
           label={

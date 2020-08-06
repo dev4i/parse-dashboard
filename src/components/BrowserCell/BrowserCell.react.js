@@ -319,7 +319,7 @@ export default class BrowserCell extends Component {
         }}
         onContextMenu={this.onContextMenu.bind(this)}
       >
-        {content}
+        {typeof content === 'string' && content.length > 100 ? content.substr(0,10)+'...' : content}
       </span>
     );
   }

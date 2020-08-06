@@ -16,8 +16,7 @@ import stylesColumnsConfiguration from 'components/ColumnsConfiguration/ColumnsC
 import stylesDataBrowserHeaderBar from 'components/DataBrowserHeaderBar/DataBrowserHeaderBar.scss';
 import stylesFooter from 'components/Modal/Modal.scss';
 
-// The initial and max amount of rows fetched by lazy loading
-const MAX_ROWS_FETCHED = 200;
+
 const SELECTION_INPUT_ID = 'selectionInput';
 
 export default class ObjectPickerDialog extends React.Component {
@@ -92,7 +91,7 @@ export default class ObjectPickerDialog extends React.Component {
     this.setState({
       data: data,
       filters,
-      lastMax: MAX_ROWS_FETCHED,
+      lastMax: this.props.maxRows,
       filteredCounts: filteredCounts
     });
   }
@@ -108,7 +107,7 @@ export default class ObjectPickerDialog extends React.Component {
       query.ascending(field);
     }
 
-    query.limit(MAX_ROWS_FETCHED);
+    query.limit(this.props.maxRows);
 
     let promise = query.find({ useMasterKey: true });
 
@@ -170,7 +169,7 @@ export default class ObjectPickerDialog extends React.Component {
       );
       query.addDescending('createdAt');
     }
-    query.limit(MAX_ROWS_FETCHED);
+    query.limit(this.props.maxRows);
 
     query.find({ useMasterKey: true }).then(nextPage => {
       if (className === this.props.className) {
@@ -179,7 +178,7 @@ export default class ObjectPickerDialog extends React.Component {
         }));
       }
     });
-    this.setState({ lastMax: this.state.lastMax + MAX_ROWS_FETCHED });
+    this.setState({ lastMax: this.state.lastMax + this.props.maxRows });
   }
 
   async updateFilters(filters) {

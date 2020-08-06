@@ -14,6 +14,7 @@ import ParseApp               from 'lib/ParseApp';
 import React                  from 'react';
 import PropTypes              from 'lib/PropTypes';
 import { SpecialClasses }     from 'lib/Constants';
+// import e from 'express';
 
 /**
  * DataBrowser renders the browser toolbar and data table
@@ -266,6 +267,8 @@ export default class DataBrowser extends React.Component {
           className={SpecialClasses[className] || className}
           classNameForEditors={className}
           setCurrent={this.setCurrent}
+          setMaxRows={this.props.setMaxRows}
+          maxRows={this.props.maxRows}
           enableDeleteAllRows={this.context.currentApp.serverInfo.features.schemas.clearAllDataFromClass && !preventSchemaEdits}
           enableExportClass={this.context.currentApp.serverInfo.features.schemas.exportClass && !preventSchemaEdits}
           enableSecurityDialog={this.context.currentApp.serverInfo.features.schemas.editClassLevelPermissions && !disableSecurityDialog && !preventSchemaEdits}

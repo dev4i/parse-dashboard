@@ -38,8 +38,6 @@ import { Helmet }                         from 'react-helmet';
 import PropTypes                          from 'lib/PropTypes';
 import ParseApp                           from 'lib/ParseApp';
 
-// The initial and max amount of rows fetched by lazy loading
-const MAX_ROWS_FETCHED = 200;
 
 export default
 @subscribeTo('Schema', 'schema')
@@ -79,6 +77,7 @@ class Browser extends DashboardView {
 
       isUnique: false,
       uniqueField: null,
+      maxRows: 20,
     };
 
     this.prefetchData = this.prefetchData.bind(this);
@@ -95,6 +94,7 @@ class Browser extends DashboardView {
     this.cancelAttachRows = this.cancelAttachRows.bind(this);
     this.confirmAttachRows = this.confirmAttachRows.bind(this);
     this.showAttachSelectedRowsDialog = this.showAttachSelectedRowsDialog.bind(this);
+    this.setMaxRows = this.setMaxRows.bind(this);
     this.confirmAttachSelectedRows = this.confirmAttachSelectedRows.bind(this);
     this.cancelAttachSelectedRows = this.cancelAttachSelectedRows.bind(this);
     this.showCloneSelectedRowsDialog = this.showCloneSelectedRowsDialog.bind(this);
@@ -239,6 +239,10 @@ class Browser extends DashboardView {
     this.setState({ showExportDialog: true });
   }
 
+  setMaxRows(e) {
+    this.setState({maxRows:e})
+  }
+
   createClass(className) {
     this.props.schema.dispatch(ActionTypes.CREATE_CLASS, { className }).then(() => {
       this.state.counts[className] = 0;
@@ -354,7 +358,7 @@ class Browser extends DashboardView {
       query.ascending(field)
     }
 
-    query.limit(MAX_ROWS_FETCHED);
+    query.limit(this.state.maxRows);
 
     let promise = query.find({ useMasterKey: true });
     let isUnique = false;
@@ -391,7 +395,7 @@ class Browser extends DashboardView {
     } else {
       delete filteredCounts[source];
     }
-    this.setState({ data: data, filters, lastMax: MAX_ROWS_FETCHED , filteredCounts: filteredCounts});
+    this.setState({ data: data, filters, lastMax: this.state.maxRows , filteredCounts: filteredCounts});
   }
 
   async fetchRelation(relation, filters = new List()) {
@@ -403,7 +407,7 @@ class Browser extends DashboardView {
       selection: {},
       data,
       filters,
-      lastMax: MAX_ROWS_FETCHED,
+      lastMax: this.state.maxRows,
     });
   }
 
@@ -450,7 +454,7 @@ class Browser extends DashboardView {
       query.lessThan('createdAt', this.state.data[this.state.data.length - 1].get('createdAt'));
       query.addDescending('createdAt');
     }
-    query.limit(MAX_ROWS_FETCHED);
+    query.limit(this.state.maxRows);
 
     query.find({ useMasterKey: true }).then((nextPage) => {
       if (className === this.props.params.className) {
@@ -459,7 +463,7 @@ class Browser extends DashboardView {
         }));
       }
     });
-    this.setState({ lastMax: this.state.lastMax + MAX_ROWS_FETCHED });
+    this.setState({ lastMax: this.state.lastMax + this.state.maxRows });
   }
 
   updateFilters(filters) {
@@ -611,7 +615,7 @@ class Browser extends DashboardView {
           this.state.counts[className] = 0;
           this.setState({
             data: [],
-            lastMax: MAX_ROWS_FETCHED,
+            lastMax: this.state.maxRows,
             selection: {},
           });
         }
@@ -667,7 +671,7 @@ class Browser extends DashboardView {
 
             // If after deletion, the remaining elements on the table is lesser than the maximum allowed elements
             // we fetch more data to fill the table
-            if (this.state.data.length < MAX_ROWS_FETCHED) {
+            if (this.state.data.length < this.state.maxRows) {
               this.prefetchData(this.props, this.context);
             } else {
               this.forceUpdate();
@@ -995,6 +999,8 @@ class Browser extends DashboardView {
             count={count}
             perms={this.state.clp[className]}
             schema={this.props.schema}
+            setMaxRows={this.setMaxRows}
+            maxRows={this.state.maxRows}
             filters={this.state.filters}
             onFilterChange={this.updateFilters}
             onRemoveColumn={this.showRemoveColumn}
@@ -1165,6 +1171,7 @@ class Browser extends DashboardView {
       extras = (
         <EditRowDialog
           className={className}
+          maxRows={this.props.maxRows}
           columns={columns}
           selectedObject={selectedObject}
           handlePointerClick={this.handlePointerClick}
