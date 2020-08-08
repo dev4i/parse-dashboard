@@ -251,6 +251,7 @@ export default class DataBrowser extends React.Component {
           order={this.state.order}
           current={this.state.current}
           editing={this.state.editing}
+          columnFilterValue={this.props.columnFilterValue}
           simplifiedSchema={this.state.simplifiedSchema}
           className={className}
           handleHeaderDragDrop={this.handleHeaderDragDrop}
@@ -269,6 +270,8 @@ export default class DataBrowser extends React.Component {
           setCurrent={this.setCurrent}
           setMaxRows={this.props.setMaxRows}
           maxRows={this.props.maxRows}
+          columnFilterValue={this.props.columnFilterValue}
+          setColumnFilter={this.props.setColumnFilter}
           enableDeleteAllRows={this.context.currentApp.serverInfo.features.schemas.clearAllDataFromClass && !preventSchemaEdits}
           enableExportClass={this.context.currentApp.serverInfo.features.schemas.exportClass && !preventSchemaEdits}
           enableSecurityDialog={this.context.currentApp.serverInfo.features.schemas.editClassLevelPermissions && !disableSecurityDialog && !preventSchemaEdits}

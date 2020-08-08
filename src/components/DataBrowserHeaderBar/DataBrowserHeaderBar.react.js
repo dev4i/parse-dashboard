@@ -40,24 +40,49 @@ export default class DataBrowserHeaderBar extends React.Component {
         onClick = () => updateOrdering((order === 'descending' ? '' : '-') + name);
       }
 
-      elements.push(
-        <div
-          onClick={onClick}
-          key={'header' + i}
-          className={styles.wrap}
-          style={ wrapStyle }>
-          <DataBrowserHeader
-            name={name}
-            type={type}
-            targetClass={targetClass}
-            order={order}
-            index={i}
-            moveDataBrowserHeader={this.props.handleDragDrop}/>
-        </div>
-      );
-      elements.push(
-        <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
-      );
+
+      
+      if(this.props.columnFilterValue){
+        if(name.toLowerCase().includes(this.props.columnFilterValue.toLowerCase())){
+          elements.push(
+            <div
+              onClick={onClick}
+              key={'header' + i}
+              className={styles.wrap}
+              style={ wrapStyle }>
+              <DataBrowserHeader
+                name={name}
+                type={type}
+                targetClass={targetClass}
+                order={order}
+                index={i}
+                moveDataBrowserHeader={this.props.handleDragDrop}/>
+            </div>
+          );
+          elements.push(
+            <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
+          );
+        }
+      }else{
+        elements.push(
+          <div
+            onClick={onClick}
+            key={'header' + i}
+            className={styles.wrap}
+            style={ wrapStyle }>
+            <DataBrowserHeader
+              name={name}
+              type={type}
+              targetClass={targetClass}
+              order={order}
+              index={i}
+              moveDataBrowserHeader={this.props.handleDragDrop}/>
+          </div>
+        );
+        elements.push(
+          <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
+        );
+      }
     });
 
     if (onAddColumn) {
@@ -65,7 +90,7 @@ export default class DataBrowserHeaderBar extends React.Component {
       if (headers.length % 2) {
         finalStyle.background = 'rgba(224,224,234,0.10)';
       }
-  
+      
       elements.push(
         readonly || preventSchemaEdits ? null : (
           <div key='add' className={styles.addColumn} style={finalStyle}>

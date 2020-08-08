@@ -7,6 +7,7 @@
  */
 import BrowserFilter from 'components/BrowserFilter/BrowserFilter.react';
 import RowLimit from 'components/RowLimit/RowLimit.react';
+import ColumnFilter from 'components/ColumnFilter/ColumnFilter.react';
 import BrowserMenu from 'components/BrowserMenu/BrowserMenu.react';
 import Icon from 'components/Icon/Icon.react';
 import MenuItem from 'components/BrowserMenu/MenuItem.react';
@@ -57,6 +58,8 @@ let BrowserToolbar = ({
 	enableSecurityDialog,
 	setMaxRows,
 	maxRows,
+	columnFilterValue,
+	setColumnFilter,
 	enableColumnManipulation,
 	enableClassManipulation
 }) => {
@@ -208,6 +211,8 @@ let BrowserToolbar = ({
 				handleColumnDragDrop={handleColumnDragDrop}
 				order={order}
 			/>
+			<div className={styles.toolbarSeparator} />
+			<ColumnFilter className={classNameForEditors} setColumnFilter={setColumnFilter} columnFilterValue={columnFilterValue} />
 			<div className={styles.toolbarSeparator} />
 			<RowLimit className={classNameForEditors} setMaxRows={setMaxRows} maxRows={maxRows} />
 			<div className={styles.toolbarSeparator} />

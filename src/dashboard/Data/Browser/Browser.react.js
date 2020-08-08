@@ -78,6 +78,7 @@ class Browser extends DashboardView {
       isUnique: false,
       uniqueField: null,
       maxRows: 20,
+      columnFilterValue:''
     };
 
     this.prefetchData = this.prefetchData.bind(this);
@@ -121,6 +122,7 @@ class Browser extends DashboardView {
     this.closeEditRowDialog = this.closeEditRowDialog.bind(this);
     this.handleShowAcl = this.handleShowAcl.bind(this);
     this.onDialogToggle = this.onDialogToggle.bind(this);
+    this.setColumnFilter = this.setColumnFilter.bind(this);
   }
 
   componentWillMount() {
@@ -241,6 +243,10 @@ class Browser extends DashboardView {
 
   setMaxRows(e) {
     this.setState({maxRows:e})
+  }
+
+  setColumnFilter(e){
+    this.setState({columnFilterValue:e})
   }
 
   createClass(className) {
@@ -1000,6 +1006,8 @@ class Browser extends DashboardView {
             perms={this.state.clp[className]}
             schema={this.props.schema}
             setMaxRows={this.setMaxRows}
+            setColumnFilter={this.setColumnFilter}
+            columnFilterValue={this.state.columnFilterValue}
             maxRows={this.state.maxRows}
             filters={this.state.filters}
             onFilterChange={this.updateFilters}
