@@ -40,49 +40,24 @@ export default class DataBrowserHeaderBar extends React.Component {
         onClick = () => updateOrdering((order === 'descending' ? '' : '-') + name);
       }
 
-
-      
-      if(this.props.columnFilterValue){
-        if(name.toLowerCase().includes(this.props.columnFilterValue.toLowerCase())){
-          elements.push(
-            <div
-              onClick={onClick}
-              key={'header' + i}
-              className={styles.wrap}
-              style={ wrapStyle }>
-              <DataBrowserHeader
-                name={name}
-                type={type}
-                targetClass={targetClass}
-                order={order}
-                index={i}
-                moveDataBrowserHeader={this.props.handleDragDrop}/>
-            </div>
-          );
-          elements.push(
-            <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
-          );
-        }
-      }else{
-        elements.push(
-          <div
-            onClick={onClick}
-            key={'header' + i}
-            className={styles.wrap}
-            style={ wrapStyle }>
-            <DataBrowserHeader
-              name={name}
-              type={type}
-              targetClass={targetClass}
-              order={order}
-              index={i}
-              moveDataBrowserHeader={this.props.handleDragDrop}/>
-          </div>
-        );
-        elements.push(
-          <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
-        );
-      }
+      elements.push(
+        <div
+          onClick={onClick}
+          key={'header' + i}
+          className={styles.wrap}
+          style={ wrapStyle }>
+          <DataBrowserHeader
+            name={name}
+            type={type}
+            targetClass={targetClass}
+            order={order}
+            index={i}
+            moveDataBrowserHeader={this.props.handleDragDrop}/>
+        </div>
+      );
+      elements.push(
+        <DragHandle key={'handle' + i} className={styles.handle} onDrag={onResize.bind(null, i)} />
+      );
     });
 
     if (onAddColumn) {

@@ -58,8 +58,6 @@ let BrowserToolbar = ({
 	enableSecurityDialog,
 	setMaxRows,
 	maxRows,
-	columnFilterValue,
-	setColumnFilter,
 	enableColumnManipulation,
 	enableClassManipulation
 }) => {
@@ -212,9 +210,9 @@ let BrowserToolbar = ({
 				order={order}
 			/>
 			<div className={styles.toolbarSeparator} />
-			<ColumnFilter className={classNameForEditors} setColumnFilter={setColumnFilter} columnFilterValue={columnFilterValue} />
+			<ColumnFilter order={order} handleColumnsOrder={handleColumnsOrder} setCurrent={setCurrent} className={classNameForEditors} />
 			<div className={styles.toolbarSeparator} />
-			<RowLimit className={classNameForEditors} setMaxRows={setMaxRows} maxRows={maxRows} />
+			<RowLimit refresh={onRefresh} setCurrent={setCurrent} className={classNameForEditors} setMaxRows={setMaxRows} maxRows={maxRows} />
 			<div className={styles.toolbarSeparator} />
 			<a className={styles.toolbarButton} onClick={onRefresh}>
 				<Icon name="refresh-solid" width={14} height={14} />

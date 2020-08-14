@@ -125,7 +125,6 @@ export default class BrowserTable extends React.Component {
               className={this.props.className}
               columns={this.props.columns}
               currentCol={currentCol}
-              columnFilterValue={this.props.columnFilterValue}
               isUnique={this.props.isUnique}
               obj={this.props.newObject}
               onPointerClick={this.props.onPointerClick}
@@ -163,7 +162,6 @@ export default class BrowserTable extends React.Component {
           columns={this.props.columns}
           schema={this.props.schema}
           simplifiedSchema={this.props.simplifiedSchema}
-          columnFilterValue={this.props.columnFilterValue}
           filters={this.props.filters}
           currentCol={currentCol}
           isUnique={this.props.isUnique}
@@ -338,7 +336,6 @@ export default class BrowserTable extends React.Component {
             this.props.data &&
             Object.values(this.props.selection).filter(checked => checked).length === this.props.data.length
           }
-          columnFilterValue={this.props.columnFilterValue}
           selectAll={checked => this.props.data.forEach(({ id }) => this.props.selectRow(id, checked))}
           headers={headers}
           updateOrdering={this.props.updateOrdering}

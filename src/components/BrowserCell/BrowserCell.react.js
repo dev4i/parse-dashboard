@@ -25,6 +25,7 @@ export default class BrowserCell extends Component {
 
   componentDidUpdate() {
     if (this.props.current) {
+      
       const node = this.cellRef.current;
       const { setRelation } = this.props;
       const { left, right, bottom, top } = node.getBoundingClientRect();
@@ -41,7 +42,6 @@ export default class BrowserCell extends Component {
       } else if (top < topBoundary || bottom > window.innerHeight) {
         node.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
-
       if (!this.props.hidden) {
         this.props.setCopyableValue(this.copyableValue);
       }

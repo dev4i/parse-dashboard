@@ -59,38 +59,6 @@ export default class BrowserRow extends Component {
             }
           }
           
-          if(this.props.columnFilterValue){
-            if(name.toLowerCase().includes(this.props.columnFilterValue.toLowerCase())){
-              return (
-                <BrowserCell
-                  key={name}
-                  schema={this.props.schema}
-                  simplifiedSchema={this.props.simplifiedSchema}
-                  filters={this.props.filters}
-                  className={className}
-                  field={name}
-                  row={row}
-                  col={j}
-                  type={type}
-                  readonly={isUnique || readOnlyFields.indexOf(name) > -1}
-                  width={width}
-                  current={currentCol === j}
-                  onSelect={setCurrent}
-                  onEditChange={setEditing}
-                  onPointerClick={onPointerClick}
-                  onFilterChange={onFilterChange}
-                  setRelation={setRelation}
-                  objectId={obj.id}
-                  value={attr}
-                  hidden={hidden}
-                  setCopyableValue={setCopyableValue}
-                  setContextMenu={setContextMenu}
-                  onEditSelectedRow={onEditSelectedRow} />
-              );
-            }else{
-              return null;
-            }
-          }
           return (
             <BrowserCell
               key={name}

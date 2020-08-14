@@ -9,18 +9,27 @@
 import React from 'react';
 import styles from 'components/RowLimit/RowLimit.scss';
 
-
-let RowLimit = ({ maxRows, setMaxRows }) => (
+let RowLimit = ({ maxRows, setMaxRows, setCurrent, refresh }) => (
 	<div className={styles.limitRow}>
 		<span>Row Limit:</span>
-		<input type="number" value={maxRows} onChange={(e)=> {
-      let num = Number(e.target.value)
-      if(num === 0){
-        setMaxRows("")
-      }else{
-        setMaxRows(num)
-      }
-      }} />
+		<input
+			onKeyDown={(e) => {
+				if (e.key === 'Enter') {
+					refresh();
+				}
+			}}
+			type="number"
+			value={maxRows}
+			onFocus={() => setCurrent(null)}
+			onChange={(e) => {
+				let num = Number(e.target.value);
+				if (num === 0) {
+					setMaxRows('');
+				} else {
+					setMaxRows(num);
+				}
+			}}
+		/>
 	</div>
 );
 
